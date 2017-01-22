@@ -21,6 +21,7 @@ public class HelloRealmApplication extends Application {
 //                .name("moody.realm")
 //                .build();
 //        Realm.setDefaultConfiguration(realmConfiguration);
+        //TODO fix default config to set name
         Realm.init(this);
 
         Stetho.initialize(

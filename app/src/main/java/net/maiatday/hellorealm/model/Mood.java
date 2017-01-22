@@ -12,7 +12,7 @@ import io.realm.annotations.PrimaryKey;
 
 public class Mood extends RealmObject {
 
-    //@PrimaryKey
+    //@PrimaryKey TODO fix primary key
     private String id;
     private String mood;
     private String note;

@@ -7,6 +7,7 @@ import android.util.Log;
 import net.maiatday.hellorealm.R;
 import net.maiatday.hellorealm.model.Mood;
 
+import java.util.Date;
 import java.util.UUID;
 
 import io.realm.Realm;
@@ -28,14 +29,14 @@ public class MainActivity extends AppCompatActivity {
                 m.setId(UUID.randomUUID().toString());
                 m.setEnergyLevel(-2);
                 m.setMood("Happy");
-                m.setNote("testing testing");
-
+                m.setNote("testing testing " + new Date().getTime());
+                m.setTimestamp(new Date());
             }
         });
 
        RealmResults<Mood> moods = realm.where(Mood.class).findAll();
         for (Mood m:moods) {
-            Log.d(TAG, "mood: " + m.getMood() + " " + m.getId());
+            Log.d(TAG, "mood: " + m.getMood() + " " +m.getNote() + " " + m.getId());
         }
     }
 
