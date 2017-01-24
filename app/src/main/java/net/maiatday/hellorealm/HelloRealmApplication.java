@@ -9,20 +9,20 @@ import io.realm.Realm;
 import io.realm.RealmConfiguration;
 
 /**
- * Application Class
- * Created by maia on 2017/01/22.
+ Applicationia *  on 2017 Class
+ * Created by ma/01/22.
  */
 
 public class HelloRealmApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-//        RealmConfiguration realmConfiguration = new RealmConfiguration.Builder(this)
-//                .name("moody.realm")
+
+        Realm.init(this);
+//        RealmConfiguration realmConfiguration = new RealmConfiguration.Builder()
+//                .name("moods.realm")
 //                .build();
 //        Realm.setDefaultConfiguration(realmConfiguration);
-        //TODO fix default config to set name
-        Realm.init(this);
 
         Stetho.initialize(
                 Stetho.newInitializerBuilder(this)
