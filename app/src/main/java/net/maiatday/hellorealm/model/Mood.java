@@ -33,7 +33,7 @@ public class Mood extends RealmObject {
     @PossibleMood
     private int mood;
     private String note;
-    private float energyLevel;
+    private int energyLevel;
     private Date timestamp;
 
     public String getId() {
@@ -61,11 +61,11 @@ public class Mood extends RealmObject {
         this.note = note;
     }
 
-    public float getEnergyLevel() {
+    public int getEnergyLevel() {
         return energyLevel;
     }
 
-    public void setEnergyLevel(float energyLevel) {
+    public void setEnergyLevel(int energyLevel) {
         this.energyLevel = energyLevel;
     }
 

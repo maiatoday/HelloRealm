@@ -1,11 +1,12 @@
 package net.maiatday.hellorealm.ui;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.SeekBar;
 import android.widget.TextView;
 
 import net.maiatday.hellorealm.R;
@@ -26,13 +27,8 @@ public class MainActivity extends AppCompatActivity {
     private TextView textView;
     private EditText editTextMain;
     private EditText editTextWorker;
-
-    private RealmChangeListener<Realm> realmChangeListener = new RealmChangeListener<Realm>() {
-        @Override
-        public void onChange(Realm element) {
-            updateUI();
-        }
-    };
+    private ImageView currentMood;
+    private SeekBar energyBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +37,9 @@ public class MainActivity extends AppCompatActivity {
         textView = (TextView) findViewById(R.id.text_first_mood);
         editTextMain = (EditText) findViewById(R.id.text_main);
         editTextWorker = (EditText) findViewById(R.id.text_worker);
+        energyBar = (SeekBar) findViewById(R.id.energyBar);
+        energyBar.setOnSeekBarChangeListener(seekBarChangeListener);
+        currentMood = (ImageView) findViewById(R.id.imageCurrentMood);
         realm = Realm.getDefaultInstance();
         realm.addChangeListener(realmChangeListener);
         RealmResults<Mood> moods = realm.where(Mood.class).findAll();
@@ -66,8 +65,29 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void updateUI() {
-        if (textView != null && firstMood != null) {
-            textView.setText(firstMood.getNote() + " " + firstMood.getTimestamp().toString());
+        if (textView != null &&
+                energyBar != null &&
+                currentMood != null &&
+                firstMood != null) {
+            //energyBar.setProgress(firstMood.getEnergyLevel(), true);
+            textView.setText(firstMood.toString());
+            switch (firstMood.getMood()) {
+                case Mood.SUPER_SAD:
+                    currentMood.setImageResource(R.drawable.ic_mood_super_sad);
+                    break;
+                case Mood.SAD:
+                    currentMood.setImageResource(R.drawable.ic_mood_sad);
+                    break;
+                case Mood.MEH:
+                    currentMood.setImageResource(R.drawable.ic_mood_meh);
+                    break;
+                case Mood.HAPPY:
+                    currentMood.setImageResource(R.drawable.ic_mood_happy);
+                    break;
+                case Mood.SUPER_HAPPY:
+                    currentMood.setImageResource(R.drawable.ic_mood_super_happy);
+                    break;
+            }
         }
     }
 
@@ -89,4 +109,61 @@ public class MainActivity extends AppCompatActivity {
             WorkerIntentService.startUpdateFirstNote(this, editTextWorker.getText().toString());
         }
     }
+
+    public void onMoodClick(View view) {
+        int id = view.getId();
+        @Mood.PossibleMood int mood = Mood.MEH;
+        switch (id) {
+            case R.id.buttonSuperSad:
+                mood = Mood.SUPER_SAD;
+                break;
+            case R.id.buttonSad:
+                mood = Mood.SAD;
+                break;
+            case R.id.buttonMeh:
+                mood = Mood.MEH;
+                break;
+            case R.id.buttonHappy:
+                mood = Mood.HAPPY;
+                break;
+            case R.id.buttonSuperHappy:
+                mood = Mood.SUPER_HAPPY;
+                break;
+        }
+        realm.beginTransaction();
+        Mood m = realm.where(Mood.class).findFirst();
+        m.setMood(mood);
+        m.setTimestamp(new Date());
+        realm.commitTransaction();
+    }
+
+
+    private SeekBar.OnSeekBarChangeListener seekBarChangeListener = new SeekBar.OnSeekBarChangeListener() {
+        @Override
+        public void onProgressChanged(SeekBar seekBar, int progressValue, boolean fromUser) {
+            realm.beginTransaction();
+            Mood m = realm.where(Mood.class).findFirst();
+            m.setEnergyLevel(progressValue);
+            m.setTimestamp(new Date());
+            realm.commitTransaction();
+        }
+
+        @Override
+        public void onStartTrackingTouch(SeekBar seekBar) {
+           // do nothing
+        }
+
+        @Override
+        public void onStopTrackingTouch(SeekBar seekBar) {
+           // do nothing
+        }
+    };
+
+
+    private RealmChangeListener<Realm> realmChangeListener = new RealmChangeListener<Realm>() {
+        @Override
+        public void onChange(Realm element) {
+            updateUI();
+        }
+    };
 }
