@@ -5,10 +5,12 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import net.maiatday.hellorealm.R;
 import net.maiatday.hellorealm.model.Mood;
+import net.maiatday.hellorealm.service.WorkerIntentService;
 
 import java.util.Date;
 import java.util.UUID;
@@ -21,8 +23,10 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
     Realm realm;
     Mood firstMood;
-    private Button button;
     private TextView textView;
+    private EditText editTextMain;
+    private EditText editTextWorker;
+
     private RealmChangeListener<Realm> realmChangeListener = new RealmChangeListener<Realm>() {
         @Override
         public void onChange(Realm element) {
@@ -34,23 +38,26 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        button = (Button) findViewById(R.id.button);
-        textView = (TextView) findViewById(R.id.textView);
+        textView = (TextView) findViewById(R.id.text_first_mood);
+        editTextMain = (EditText) findViewById(R.id.text_main);
+        editTextWorker = (EditText) findViewById(R.id.text_worker);
         realm = Realm.getDefaultInstance();
         realm.addChangeListener(realmChangeListener);
-        realm.executeTransaction(new Realm.Transaction() {
-            @Override
-            public void execute(Realm realm) {
-                Mood m = realm.createObject(Mood.class);
-                m.setId(UUID.randomUUID().toString());
-                m.setEnergyLevel(-2);
-                m.setMood("Happy");
-                m.setNote("testing testing " + new Date().getTime());
-                m.setTimestamp(new Date());
-            }
-        });
-
         RealmResults<Mood> moods = realm.where(Mood.class).findAll();
+        if (moods.isEmpty()) {
+            realm.executeTransaction(new Realm.Transaction() {
+                @Override
+                public void execute(Realm realm) {
+                    Mood m = realm.createObject(Mood.class);
+                    m.setId(UUID.randomUUID().toString());
+                    m.setEnergyLevel(-2);
+                    m.setMood(Mood.MEH);
+                    m.setNote("testing testing");
+                    m.setTimestamp(new Date());
+                }
+            });
+        }
+
         for (Mood m : moods) {
             Log.d(TAG, "mood: " + m.getMood() + " " + m.getNote() + " " + m.getId());
         }
@@ -72,10 +79,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onClick(View view) {
-        realm.beginTransaction();
-        Mood m = realm.where(Mood.class).findFirst();
-        m.setNote("hehe");
-        m.setTimestamp(new Date());
-        realm.commitTransaction();
+        if (view.getId() == R.id.button_update_main) {
+            realm.beginTransaction();
+            Mood m = realm.where(Mood.class).findFirst();
+            m.setNote(editTextMain.getText().toString());
+            m.setTimestamp(new Date());
+            realm.commitTransaction();
+        } else {
+            WorkerIntentService.startUpdateFirstNote(this, editTextWorker.getText().toString());
+        }
     }
 }
