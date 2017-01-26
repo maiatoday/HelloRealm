@@ -22,7 +22,7 @@ import static java.lang.annotation.RetentionPolicy.SOURCE;
 @RealmClass
 public class Mood implements RealmModel {
     public Mood() {
-        setId(UUID.randomUUID().toString());
+       // setId(UUID.randomUUID().toString());
         setTimestamp(new Date());
     }
 

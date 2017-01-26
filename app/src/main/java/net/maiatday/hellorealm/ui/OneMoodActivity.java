@@ -58,13 +58,15 @@ public class OneMoodActivity extends AppCompatActivity {
             realmForUIThread.executeTransaction(new Realm.Transaction() {
                 @Override
                 public void execute(Realm realm) {
-                    Mood m = new Mood();
-                    uuid = m.getId();
-//                    m.setEnergyLevel(-2);
-//                    m.setMood(Mood.MEH);
-//                    m.setNote("testing testing");
-//                    m.setTimestamp(new Date());
-                    realm.copyToRealmOrUpdate(m);
+                    // Example of creating or updating an object and copying it into the realm
+//                    uuid = UUID.randomUUID().toString();
+//                    Mood m = new Mood();
+//                    m.setId(uuid);
+//                    realm.copyToRealmOrUpdate(m);
+
+                    // Example of creating a new object
+                    uuid = UUID.randomUUID().toString();
+                    realm.createObject(Mood.class, uuid);
                 }
             });
         }
