@@ -4,9 +4,13 @@ import android.support.annotation.IntDef;
 
 import java.lang.annotation.Retention;
 import java.util.Date;
+import java.util.UUID;
 
+import io.realm.RealmModel;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
+import io.realm.annotations.RealmClass;
+import io.realm.annotations.Required;
 
 import static java.lang.annotation.RetentionPolicy.SOURCE;
 
@@ -15,7 +19,12 @@ import static java.lang.annotation.RetentionPolicy.SOURCE;
  * Created by maia on 2017/01/22.
  */
 
-public class Mood extends RealmObject {
+@RealmClass
+public class Mood implements RealmModel {
+    public Mood() {
+        setId(UUID.randomUUID().toString());
+        setTimestamp(new Date());
+    }
 
     @Retention(SOURCE)
     @IntDef({SUPER_HAPPY, HAPPY, MEH, SAD, SUPER_SAD})
@@ -28,12 +37,14 @@ public class Mood extends RealmObject {
     public static final int SAD = -1;
     public static final int SUPER_SAD = -2;
 
-    //@PrimaryKey TODO fix primary key
+    @Required
+    @PrimaryKey
     private String id;
     @PossibleMood
     private int mood;
     private String note;
     private int energyLevel;
+    @Required
     private Date timestamp;
 
     public String getId() {
