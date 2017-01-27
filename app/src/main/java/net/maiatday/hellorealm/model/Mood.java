@@ -1,6 +1,9 @@
 package net.maiatday.hellorealm.model;
 
+import android.support.annotation.DrawableRes;
 import android.support.annotation.IntDef;
+
+import net.maiatday.hellorealm.R;
 
 import java.lang.annotation.Retention;
 import java.util.Date;
@@ -22,7 +25,7 @@ import static java.lang.annotation.RetentionPolicy.SOURCE;
 @RealmClass
 public class Mood implements RealmModel {
     public Mood() {
-       // setId(UUID.randomUUID().toString());
+        // setId(UUID.randomUUID().toString());
         setTimestamp(new Date());
     }
 
@@ -87,4 +90,41 @@ public class Mood implements RealmModel {
     public void setTimestamp(Date timestamp) {
         this.timestamp = timestamp;
     }
+
+    @DrawableRes
+    public static int moodToDrawableId(@PossibleMood int m) {
+        switch (m) {
+            case SUPER_SAD:
+                return R.drawable.ic_mood_super_sad;
+            case SAD:
+                return R.drawable.ic_mood_sad;
+            case MEH:
+                return R.drawable.ic_mood_meh;
+            case HAPPY:
+                return R.drawable.ic_mood_happy;
+            case SUPER_HAPPY:
+                return R.drawable.ic_mood_super_happy;
+            default:
+                return R.drawable.ic_mood_meh;
+        }
+    }
+
+    @PossibleMood
+    public static int idToMood(@DrawableRes int i) {
+        switch (i) {
+            case R.drawable.ic_mood_super_sad:
+                return SUPER_SAD;
+            case R.drawable.ic_mood_sad:
+                return SAD;
+            case R.drawable.ic_mood_meh:
+                return MEH;
+            case R.drawable.ic_mood_happy:
+                return HAPPY;
+            case R.drawable.ic_mood_super_happy:
+                return SUPER_HAPPY;
+            default:
+                return MEH;
+        }
+    }
+
 }

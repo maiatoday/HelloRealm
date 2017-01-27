@@ -21,6 +21,7 @@ import java.util.UUID;
 
 import io.realm.Realm;
 import io.realm.RealmChangeListener;
+import io.realm.RealmObject;
 import io.realm.RealmResults;
 
 public class OneMoodActivity extends AppCompatActivity {
@@ -31,7 +32,7 @@ public class OneMoodActivity extends AppCompatActivity {
     private TextView textView;
     private EditText editTextMain;
     private EditText editTextWorker;
-    private ImageView currentMood;
+    private ImageView currentMoodImage;
     private SeekBar energyBar;
     private String uuid;
 
@@ -51,9 +52,10 @@ public class OneMoodActivity extends AppCompatActivity {
         editTextWorker = (EditText) findViewById(R.id.text_worker);
         energyBar = (SeekBar) findViewById(R.id.energyBar);
         energyBar.setOnSeekBarChangeListener(seekBarChangeListener);
-        currentMood = (ImageView) findViewById(R.id.imageCurrentMood);
+        currentMoodImage = (ImageView) findViewById(R.id.imageCurrentMood);
         realmForUIThread = Realm.getDefaultInstance();
-        realmForUIThread.addChangeListener(realmChangeListener);
+        // Example add a change listener for the whole db
+//        realmForUIThread.addChangeListener(realmChangeListener);
         if (TextUtils.isEmpty(uuid)) {
             realmForUIThread.executeTransaction(new Realm.Transaction() {
                 @Override
@@ -71,6 +73,8 @@ public class OneMoodActivity extends AppCompatActivity {
             });
         }
         firstMood = searchMood(realmForUIThread, uuid);
+        //Example add a change listener for only this mood
+        RealmObject.addChangeListener(firstMood, moodListener);
 
         RealmResults<Mood> moods = realmForUIThread.where(Mood.class).findAll();
         for (Mood m : moods) {
@@ -86,34 +90,21 @@ public class OneMoodActivity extends AppCompatActivity {
     private void updateUI() {
         if (textView != null &&
                 energyBar != null &&
-                currentMood != null &&
+                currentMoodImage != null &&
                 firstMood != null) {
             //energyBar.setProgress(firstMood.getEnergyLevel(), true);
             textView.setText(firstMood.toString());
-            switch (firstMood.getMood()) {
-                case Mood.SUPER_SAD:
-                    currentMood.setImageResource(R.drawable.ic_mood_super_sad);
-                    break;
-                case Mood.SAD:
-                    currentMood.setImageResource(R.drawable.ic_mood_sad);
-                    break;
-                case Mood.MEH:
-                    currentMood.setImageResource(R.drawable.ic_mood_meh);
-                    break;
-                case Mood.HAPPY:
-                    currentMood.setImageResource(R.drawable.ic_mood_happy);
-                    break;
-                case Mood.SUPER_HAPPY:
-                    currentMood.setImageResource(R.drawable.ic_mood_super_happy);
-                    break;
-            }
+            currentMoodImage.setImageResource(Mood.moodToDrawableId(firstMood.getMood()));
+            editTextMain.setText(firstMood.getNote());
+            editTextWorker.setText(firstMood.getNote());
         }
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        realmForUIThread.removeAllChangeListeners();
+//        realmForUIThread.removeAllChangeListeners();
+        RealmObject.removeChangeListener(firstMood, moodListener);
         realmForUIThread.close();
     }
 
@@ -190,9 +181,16 @@ public class OneMoodActivity extends AppCompatActivity {
     };
 
 
-    private RealmChangeListener<Realm> realmChangeListener = new RealmChangeListener<Realm>() {
+//    private RealmChangeListener<Realm> realmChangeListener = new RealmChangeListener<Realm>() {
+//        @Override
+//        public void onChange(Realm element) {
+//            updateUI();
+//        }
+//    };
+
+    private RealmChangeListener<Mood> moodListener = new RealmChangeListener<Mood>() {
         @Override
-        public void onChange(Realm element) {
+        public void onChange(Mood mood) {
             updateUI();
         }
     };
