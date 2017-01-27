@@ -6,6 +6,8 @@ import android.support.annotation.IntDef;
 import net.maiatday.hellorealm.R;
 
 import java.lang.annotation.Retention;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.UUID;
 
@@ -39,6 +41,8 @@ public class Mood implements RealmModel {
     public static final int MEH = 0;
     public static final int SAD = -1;
     public static final int SUPER_SAD = -2;
+
+    public static final String ID = "id";
 
     @Required
     @PrimaryKey
@@ -125,6 +129,12 @@ public class Mood implements RealmModel {
             default:
                 return MEH;
         }
+    }
+
+    static DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
+
+    public static String shortDateString(Date date) {
+        return dateFormat.format(date);
     }
 
 }

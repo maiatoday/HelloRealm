@@ -75,16 +75,12 @@ public class OneMoodActivity extends AppCompatActivity {
         firstMood = searchMood(realmForUIThread, uuid);
         //Example add a change listener for only this mood
         RealmObject.addChangeListener(firstMood, moodListener);
-
-        RealmResults<Mood> moods = realmForUIThread.where(Mood.class).findAll();
-        for (Mood m : moods) {
-            Log.d(TAG, "mood: " + m.getMood() + " " + m.getNote() + " " + m.getId());
-        }
+        
         updateUI();
     }
 
     private Mood searchMood(Realm aRealm, String uuid) {
-        return aRealm.where(Mood.class).equalTo("id", uuid).findFirst();
+        return aRealm.where(Mood.class).equalTo(Mood.ID, uuid).findFirst();
     }
 
     private void updateUI() {
