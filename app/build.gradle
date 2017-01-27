@@ -28,9 +28,10 @@ dependencies {
     compile "com.android.support:appcompat-v7:${supportLibraryVersion}"
     compile "com.android.support:recyclerview-v7:${supportLibraryVersion}"
     compile "com.android.support:design:${supportLibraryVersion}"
+    compile "io.realm:android-adapters:${realmAdapterVersion}"
     compile 'com.android.support.constraint:constraint-layout:1.0.0-beta4'
     compile 'com.facebook.stetho:stetho:1.4.2'
     compile 'com.uphyca:stetho_realm:2.0.0'
-    compile "io.realm:android-adapters:${realmAdapterVersion}"
+    compile 'com.github.thorbenprimke:realm-recycler-view:0.9.25'
     testCompile 'junit:junit:4.12'
 }
