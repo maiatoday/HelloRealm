@@ -9,10 +9,8 @@ import java.lang.annotation.Retention;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.UUID;
 
 import io.realm.RealmModel;
-import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 import io.realm.annotations.RealmClass;
 import io.realm.annotations.Required;
@@ -43,6 +41,7 @@ public class Mood implements RealmModel {
     public static final int SUPER_SAD = -2;
 
     public static final String ID = "id";
+    public static final String TIMESTAMP = "timestamp";
 
     @Required
     @PrimaryKey
@@ -91,7 +90,8 @@ public class Mood implements RealmModel {
         return timestamp;
     }
 
-    public void setTimestamp(Date timestamp) {
+    // timestamp only set at creation
+    private void setTimestamp(Date timestamp) {
         this.timestamp = timestamp;
     }
 

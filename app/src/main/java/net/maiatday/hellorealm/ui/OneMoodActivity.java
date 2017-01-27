@@ -110,7 +110,6 @@ public class OneMoodActivity extends AppCompatActivity {
             realmForUIThread.beginTransaction();
             Mood m = searchMood(realmForUIThread, uuid);
             m.setNote(editTextMain.getText().toString());
-            m.setTimestamp(new Date());
             realmForUIThread.commitTransaction();
         } else {
             //Example: ask the intent service to do the update
@@ -145,7 +144,6 @@ public class OneMoodActivity extends AppCompatActivity {
             public void execute(Realm realm) {
                 Mood m = searchMood(realm, uuid);
                 m.setMood(finalMood);
-                m.setTimestamp(new Date());
             }
         });
     }
@@ -160,7 +158,6 @@ public class OneMoodActivity extends AppCompatActivity {
                 public void execute(Realm realm) {
                     Mood m = searchMood(realm, uuid);
                     m.setEnergyLevel(progressValue);
-                    m.setTimestamp(new Date());
                 }
             });
         }

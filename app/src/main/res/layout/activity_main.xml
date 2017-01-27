@@ -5,9 +5,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     tools:context="net.maiatday.hellorealm.ui.MainActivity">
 
     <android.support.design.widget.AppBarLayout
+        android:id="@+id/app_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:theme="@style/AppTheme.AppBarOverlay">
@@ -20,11 +22,12 @@
             app:popupTheme="@style/AppTheme.PopupOverlay"/>
 
     </android.support.design.widget.AppBarLayout>
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_view"
-        android:background="@null"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@null"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         />
 
@@ -32,8 +35,10 @@
         android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
-        app:srcCompat="@android:drawable/ic_dialog_email"/>
+        android:tint="@android:color/white"
+        app:layout_anchor="@id/toolbar"
+        app:layout_anchorGravity="bottom|right|end"
+        app:srcCompat="@drawable/ic_add_black_vector"/>
 
 </android.support.design.widget.CoordinatorLayout>

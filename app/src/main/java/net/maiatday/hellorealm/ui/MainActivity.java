@@ -14,6 +14,7 @@ import net.maiatday.hellorealm.model.Mood;
 
 import io.realm.Realm;
 import io.realm.RealmResults;
+import io.realm.Sort;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -57,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void setUpRecyclerView() {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(new MyRecyclerViewAdapter(this, realm.where(Mood.class).findAllAsync()));
+        recyclerView.setAdapter(new MyRecyclerViewAdapter(this, realm.where(Mood.class).findAllSortedAsync(Mood.TIMESTAMP, Sort.ASCENDING)));
         recyclerView.setHasFixedSize(true);
         recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST));
     }

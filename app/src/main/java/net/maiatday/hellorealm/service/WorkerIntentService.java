@@ -60,7 +60,6 @@ public class WorkerIntentService extends IntentService {
         realm.beginTransaction();
         Mood m = realm.where(Mood.class).equalTo("id", uuid).findFirst();
         m.setNote(note);
-        m.setTimestamp(new Date());
         realm.commitTransaction();
         realm.close();
     }
