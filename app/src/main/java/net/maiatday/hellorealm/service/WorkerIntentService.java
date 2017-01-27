@@ -20,6 +20,7 @@ public class WorkerIntentService extends IntentService {
     private static final String ACTION_UPDATE_FIRST_NOTE = "net.maiatday.hellorealm.service.action.UPDATE_FIRST_NOTE";
 
     private static final String EXTRA_NOTE_STRING = "net.maiatday.hellorealm.service.extra.NOTE_STRING";
+    private static final String EXTRA_UUID = "net.maiatday.hellorealm.service.extra.UUID";
 
     public WorkerIntentService() {
         super("WorkerIntentService");
@@ -30,9 +31,10 @@ public class WorkerIntentService extends IntentService {
      *
      * @see IntentService
      */
-    public static void startUpdateFirstNote(Context context, String note) {
+    public static void startUpdateFirstNote(Context context, String uuid, String note) {
         Intent intent = new Intent(context, WorkerIntentService.class);
         intent.setAction(ACTION_UPDATE_FIRST_NOTE);
+        intent.putExtra(EXTRA_UUID, uuid);
         intent.putExtra(EXTRA_NOTE_STRING, note);
         context.startService(intent);
     }
@@ -42,8 +44,9 @@ public class WorkerIntentService extends IntentService {
         if (intent != null) {
             final String action = intent.getAction();
             if (ACTION_UPDATE_FIRST_NOTE.equals(action)) {
-                final String param1 = intent.getStringExtra(EXTRA_NOTE_STRING);
-                handleActionUpdateFirstNoteFoo(param1);
+                final String note = intent.getStringExtra(EXTRA_NOTE_STRING);
+                final String uuid = intent.getStringExtra(EXTRA_UUID);
+                handleActionUpdateNote(uuid, note);
             }
         }
     }
@@ -52,12 +55,11 @@ public class WorkerIntentService extends IntentService {
      * Handle action  update the note string of the first Mood in the provided background thread
      * with the provided parameters.
      */
-    private void handleActionUpdateFirstNoteFoo(String param1) {
+    private void handleActionUpdateNote(String uuid, String note) {
         Realm realm = Realm.getDefaultInstance();
         realm.beginTransaction();
-        Mood m = realm.where(Mood.class).findFirst();
-        m.setNote(param1);
-        m.setTimestamp(new Date());
+        Mood m = realm.where(Mood.class).equalTo("id", uuid).findFirst();
+        m.setNote(note);
         realm.commitTransaction();
         realm.close();
     }

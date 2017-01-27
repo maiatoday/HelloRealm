@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?android:attr/selectableItemBackground"
+    tools:layout_editor_absoluteY="81dp"
+    tools:layout_editor_absoluteX="0dp">
+
+    <ImageView
+        android:id="@+id/imageMoodRow"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        app:srcCompat="@drawable/ic_mood_meh"
+        android:tint="@color/colorAccent"
+        app:layout_constraintRight_toLeftOf="@+id/textNote"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginLeft="@dimen/grid1"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginStart="@dimen/grid1"
+        app:layout_constraintVertical_bias="0.49"/>
+
+    <TextView
+        android:id="@+id/textNote"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        tools:text="TextView"
+        style="@style/Base.TextAppearance.AppCompat.Headline"
+        app:layout_constraintLeft_toRightOf="@+id/imageMoodRow"
+        android:layout_marginLeft="@dimen/grid1"
+        android:layout_marginRight="@dimen/grid1"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginStart="@dimen/grid1"
+        android:layout_marginEnd="@dimen/grid1"
+        app:layout_constraintBottom_toBottomOf="@+id/imageMoodRow"
+        app:layout_constraintTop_toTopOf="@+id/imageMoodRow"
+        app:layout_constraintVertical_bias="0.39"/>
+
+    <TextView
+        android:id="@+id/textDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="TextView"
+        style="@style/Base.TextAppearance.AppCompat.Caption"
+        tools:layout_constraintBottom_creator="1"
+        android:layout_marginStart="@dimen/grid1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:layout_constraintLeft_creator="1"
+        android:layout_marginBottom="@dimen/grid1"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginLeft="@dimen/grid1"
+        android:layout_marginRight="@dimen/grid1"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintHorizontal_bias="0.977"
+        android:layout_marginTop="@dimen/grid1"
+        app:layout_constraintTop_toBottomOf="@+id/textNote"
+        app:layout_constraintVertical_bias="0.0"
+        android:layout_marginEnd="@dimen/grid1"/>
+</android.support.constraint.ConstraintLayout>

@@ -1,212 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
+<android.support.design.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="net.maiatday.hellorealm.ui.MainActivity"
-    tools:layout_editor_absoluteY="81dp"
-    tools:layout_editor_absoluteX="0dp">
+    android:fitsSystemWindows="true"
+    tools:context="net.maiatday.hellorealm.ui.MainActivity">
 
-    <TextView
-        android:id="@+id/text_first_mood"
-        android:layout_width="0dp"
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/app_bar"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="0dp"
-        android:text="Hello World"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@+id/imageCurrentMood"
-        app:layout_constraintTop_toTopOf="@+id/imageCurrentMood"/>
+        android:theme="@style/AppTheme.AppBarOverlay">
 
-    <Button
-        android:id="@+id/button_update_main"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Click me"
-        android:onClick="onClick"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toRightOf="@+id/text_main"
-        app:layout_constraintTop_toTopOf="@+id/text_main"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"/>
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/AppTheme.PopupOverlay"/>
 
-    <Button
-        android:id="@+id/button_update_worker"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Click Me"
-        android:onClick="onClick"
-        app:layout_constraintTop_toTopOf="@+id/text_worker"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toRightOf="@+id/text_worker"
+    </android.support.design.widget.AppBarLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@null"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
         />
 
-    <EditText
-        android:id="@+id/text_main"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:ems="10"
-        android:hint="Note"
-        android:inputType="textPersonName"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@+id/button_update_main"
-        app:layout_constraintTop_toBottomOf="@+id/label_main"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"/>
-
-    <EditText
-        android:id="@+id/text_worker"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="Note"
-        android:inputType="textPersonName"
-        android:layout_marginTop="48dp"
-        app:layout_constraintTop_toBottomOf="@+id/imageCurrentMood"
-        app:layout_constraintRight_toLeftOf="@+id/button_update_worker"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"/>
-
-    <TextView
-        android:id="@+id/label_worker"
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Worker Thread"
-        android:layout_marginBottom="5dp"
-        app:layout_constraintBottom_toTopOf="@+id/text_worker"
-        app:layout_constraintLeft_toLeftOf="@+id/text_worker"
-        />
+        android:layout_margin="@dimen/fab_margin"
+        android:tint="@android:color/white"
+        app:layout_anchor="@id/toolbar"
+        app:layout_anchorGravity="bottom|right|end"
+        app:srcCompat="@drawable/ic_add_black_vector"/>
 
-    <TextView
-        android:id="@+id/label_main"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Main Thread"
-        app:layout_constraintLeft_toLeftOf="@+id/text_main"
-        tools:layout_constraintTop_creator="1"
-        android:layout_marginTop="23dp"
-        app:layout_constraintTop_toBottomOf="@+id/energyBar"
-        />
-
-    <ImageButton
-        android:id="@+id/buttonSuperSad"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:srcCompat="@drawable/ic_mood_super_sad"
-        style="?android:attr/borderlessButtonStyle"
-        android:tint="@color/colorAccent"
-        android:onClick="onMoodClick"
-        app:layout_constraintRight_toLeftOf="@+id/buttonSad"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/buttonSad"/>
-
-    <ImageButton
-        android:id="@+id/buttonSad"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:srcCompat="@drawable/ic_mood_sad"
-        style="?android:attr/borderlessButtonStyle"
-        android:tint="@color/colorAccent"
-        android:onClick="onMoodClick"
-        app:layout_constraintRight_toLeftOf="@+id/buttonMeh"
-        app:layout_constraintLeft_toRightOf="@+id/buttonSuperSad"
-        app:layout_constraintTop_toTopOf="@+id/buttonMeh"/>
-
-    <ImageButton
-        android:id="@+id/buttonMeh"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:srcCompat="@drawable/ic_mood_meh"
-        style="?android:attr/borderlessButtonStyle"
-        android:tint="@color/colorAccent"
-        android:onClick="onMoodClick"
-        app:layout_constraintRight_toLeftOf="@+id/buttonHappy"
-        app:layout_constraintLeft_toRightOf="@+id/buttonSad"
-        app:layout_constraintTop_toTopOf="@+id/buttonHappy"/>
-
-    <ImageButton
-        android:id="@+id/buttonHappy"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:srcCompat="@drawable/ic_mood_happy"
-        style="?android:attr/borderlessButtonStyle"
-        android:tint="@color/colorAccent"
-        android:onClick="onMoodClick"
-        app:layout_constraintRight_toLeftOf="@+id/buttonSuperHappy"
-        app:layout_constraintLeft_toRightOf="@+id/buttonMeh"
-        app:layout_constraintTop_toTopOf="@+id/buttonSuperHappy"/>
-
-    <ImageButton
-        android:id="@+id/buttonSuperHappy"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:tint="@color/colorAccent"
-        app:srcCompat="@drawable/ic_mood_super_happy"
-        style="?android:attr/borderlessButtonStyle"
-        android:onClick="onMoodClick"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toRightOf="@+id/buttonHappy"
-        tools:layout_constraintTop_creator="1"
-        android:layout_marginTop="7dp"
-        app:layout_constraintTop_toTopOf="parent"/>
-
-    <ImageView
-        android:id="@+id/imageCurrentMood"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
-        android:layout_marginBottom="24dp"
-        android:layout_marginTop="48dp"
-        android:background="?android:attr/selectableItemBackground"
-        android:tint="@color/colorAccent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@drawable/ic_mood_meh"
-        tools:layout_constraintBottom_creator="1"
-        tools:layout_constraintTop_creator="1"
-        app:layout_constraintTop_toBottomOf="@+id/button_update_main"
-        app:layout_constraintBottom_toTopOf="@+id/button_update_worker"
-        app:layout_constraintLeft_toRightOf="@+id/text_first_mood"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"/>
-
-    <SeekBar
-        android:id="@+id/energyBar"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/labelEnergy"
-        tools:layout_constraintRight_creator="1"
-        tools:layout_constraintLeft_creator="1"
-        android:max="100"/>
-
-    <TextView
-        android:id="@+id/labelEnergy"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Energy"
-        android:layout_marginLeft="16dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginStart="16dp"
-        tools:layout_constraintTop_creator="1"
-        android:layout_marginTop="15dp"
-        app:layout_constraintTop_toBottomOf="@+id/buttonSuperSad"/>
-
-</android.support.constraint.ConstraintLayout>
+</android.support.design.widget.CoordinatorLayout>
