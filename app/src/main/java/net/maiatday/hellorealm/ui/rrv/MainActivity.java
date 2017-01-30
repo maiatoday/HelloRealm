@@ -17,6 +17,7 @@ import net.maiatday.hellorealm.model.Mood;
 import net.maiatday.hellorealm.ui.DividerItemDecoration;
 import net.maiatday.hellorealm.ui.OneMoodActivity;
 import net.maiatday.hellorealm.ui.thorben.AnotherMoodListActivity;
+import net.maiatday.hellorealm.ui.thorben.TriggersActivity;
 
 import io.realm.Realm;
 import io.realm.RealmResults;
@@ -64,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
                     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                         switch (item.getItemId()) {
                             case R.id.action_triggers:
+                                startActivity(TriggersActivity.newIntent(MainActivity.this));
                                 break;
 
                             case R.id.action_alternative:

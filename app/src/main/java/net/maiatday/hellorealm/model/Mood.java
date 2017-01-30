@@ -10,6 +10,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import io.realm.RealmList;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 import io.realm.annotations.Required;
@@ -50,6 +51,8 @@ public class Mood extends RealmObject {
     private int energyLevel;
     @Required
     private Date timestamp;
+
+    RealmList<Trigger> triggers;
 
     public String getId() {
         return id;
