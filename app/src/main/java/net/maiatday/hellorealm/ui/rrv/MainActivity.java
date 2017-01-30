@@ -1,18 +1,22 @@
 package net.maiatday.hellorealm.ui.rrv;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 
 import net.maiatday.hellorealm.R;
 import net.maiatday.hellorealm.model.Mood;
 import net.maiatday.hellorealm.ui.DividerItemDecoration;
 import net.maiatday.hellorealm.ui.OneMoodActivity;
+import net.maiatday.hellorealm.ui.thorben.AnotherMoodListActivity;
 
 import io.realm.Realm;
 import io.realm.RealmResults;
@@ -50,6 +54,29 @@ public class MainActivity extends AppCompatActivity {
                 startActivityForResult(OneMoodActivity.newIntent(MainActivity.this, ""), REQUEST_NEW_MOOD);
             }
         });
+
+        BottomNavigationView bottomNavigationView = (BottomNavigationView)
+                findViewById(R.id.bottom_navigation);
+
+        bottomNavigationView.setOnNavigationItemSelectedListener(
+                new BottomNavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                        switch (item.getItemId()) {
+                            case R.id.action_triggers:
+                                break;
+
+                            case R.id.action_alternative:
+                                startActivity(AnotherMoodListActivity.newIntent(MainActivity.this));
+                                break;
+
+                            case R.id.action_settings:
+                                break;
+
+                        }
+                        return true;
+                    }
+                });
     }
 
     @Override

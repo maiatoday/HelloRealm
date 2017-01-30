@@ -1,5 +1,6 @@
 package net.maiatday.hellorealm.ui.thorben;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -23,6 +24,10 @@ public class AnotherMoodListActivity extends AppCompatActivity implements MoodRe
     private Realm realm;
     private MoodRecyclerAdapter moodRealAdapter;
 
+    public static Intent newIntent(Context context) {
+        Intent i = new Intent(context, AnotherMoodListActivity.class);
+        return i;
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
