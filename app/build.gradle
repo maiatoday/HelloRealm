@@ -25,6 +25,11 @@
 apply plugin: 'com.android.application'
 apply plugin: 'realm-android'
 
+if (project.hasProperty("helloRealm.signing")
+        && new File(project.property("helloRealm.signing") + ".gradle").exists()) {
+    apply from: project.property("helloRealm.signing") + ".gradle";
+}
+
 android {
     compileSdkVersion sdkVersion
     buildToolsVersion buildTools
@@ -33,7 +38,7 @@ android {
         minSdkVersion 16
         targetSdkVersion sdkVersion
         versionCode 1
-        versionName "1.0"
+        versionName "0.1"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = "true"
     }
