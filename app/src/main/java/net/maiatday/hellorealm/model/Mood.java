@@ -10,9 +10,8 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import io.realm.RealmModel;
+import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
-import io.realm.annotations.RealmClass;
 import io.realm.annotations.Required;
 
 import static java.lang.annotation.RetentionPolicy.SOURCE;
@@ -22,8 +21,7 @@ import static java.lang.annotation.RetentionPolicy.SOURCE;
  * Created by maia on 2017/01/22.
  */
 
-@RealmClass
-public class Mood implements RealmModel {
+public class Mood extends RealmObject {
     public Mood() {
         // setId(UUID.randomUUID().toString());
         setTimestamp(new Date());

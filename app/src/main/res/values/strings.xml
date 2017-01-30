@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">HelloRealm</string>
     <string name="title_activity_main">MainActivity</string>
+    <string name="title_activity_another_mood_list">AnotherMoodListActivity</string>
+    <string name="text_triggers">Triggers</string>
+    <string name="text_alternative">Alt</string>
+    <string name="text_settings">Settings</string>
 </resources>
