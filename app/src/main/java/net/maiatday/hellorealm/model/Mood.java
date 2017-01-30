@@ -96,6 +96,14 @@ public class Mood extends RealmObject {
         this.timestamp = timestamp;
     }
 
+    public RealmList<Trigger> getTriggers() {
+        return triggers;
+    }
+
+    public void setTriggers(RealmList<Trigger> triggers) {
+        this.triggers = triggers;
+    }
+
     @DrawableRes
     public static int moodToDrawableId(@PossibleMood int m) {
         switch (m) {
