@@ -6,7 +6,7 @@ buildscript {
         buildTools = '25.0.2'
         supportLibraryVersion = '25.1.0'
 
-        realmVersion = '2.2.1'
+        realmVersion = '2.3.0'
         realmAdapterVersion = '1.4.0'
     }
     repositories {

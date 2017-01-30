@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package net.maiatday.hellorealm.ui;
+package net.maiatday.hellorealm.ui.rrv;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -29,11 +29,11 @@ import net.maiatday.hellorealm.model.Mood;
 import io.realm.OrderedRealmCollection;
 import io.realm.RealmRecyclerViewAdapter;
 
-public class MyRecyclerViewAdapter extends RealmRecyclerViewAdapter<Mood, MyRecyclerViewAdapter.MyViewHolder> {
+public class RealmMoodRecyclerAdapter extends RealmRecyclerViewAdapter<Mood, RealmMoodRecyclerAdapter.MyViewHolder> {
 
     private final MainActivity activity;
 
-    public MyRecyclerViewAdapter(MainActivity activity, OrderedRealmCollection<Mood> data) {
+    public RealmMoodRecyclerAdapter(MainActivity activity, OrderedRealmCollection<Mood> data) {
         super(activity, data, true);
         this.activity = activity;
     }

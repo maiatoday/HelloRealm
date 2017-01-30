@@ -1,4 +1,4 @@
-package net.maiatday.hellorealm.ui;
+package net.maiatday.hellorealm.ui.rrv;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -11,6 +11,8 @@ import android.view.View;
 
 import net.maiatday.hellorealm.R;
 import net.maiatday.hellorealm.model.Mood;
+import net.maiatday.hellorealm.ui.DividerItemDecoration;
+import net.maiatday.hellorealm.ui.OneMoodActivity;
 
 import io.realm.Realm;
 import io.realm.RealmResults;
@@ -58,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void setUpRecyclerView() {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(new MyRecyclerViewAdapter(this, realm.where(Mood.class).findAllSortedAsync(Mood.TIMESTAMP, Sort.ASCENDING)));
+        recyclerView.setAdapter(new RealmMoodRecyclerAdapter(this, realm.where(Mood.class).findAllSortedAsync(Mood.TIMESTAMP, Sort.ASCENDING)));
         recyclerView.setHasFixedSize(true);
         recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST));
     }
@@ -79,4 +81,5 @@ public class MainActivity extends AppCompatActivity {
         final String id = item.getId();
         startActivityForResult(OneMoodActivity.newIntent(MainActivity.this, id), REQUEST_OLD_MOOD);
     }
+
 }
