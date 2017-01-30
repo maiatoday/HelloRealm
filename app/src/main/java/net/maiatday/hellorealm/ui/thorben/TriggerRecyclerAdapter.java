@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import net.maiatday.hellorealm.R;
 import net.maiatday.hellorealm.model.Mood;
+import net.maiatday.hellorealm.model.Trigger;
 
 import io.realm.RealmBasedRecyclerViewAdapter;
 import io.realm.RealmResults;
@@ -18,21 +19,21 @@ import io.realm.RealmViewHolder;
  * Created by maia on 2017/01/27.
  */
 
-public class MoodRecyclerAdapter extends RealmBasedRecyclerViewAdapter<Mood, MoodRecyclerAdapter.ViewHolder> {
+public class TriggerRecyclerAdapter extends RealmBasedRecyclerViewAdapter<Trigger, TriggerRecyclerAdapter.ViewHolder> {
 
-    private OnMoodItemClickListener onClickListener;
+    private OnTriggerItemClickListener onClickListener;
 
     public class ViewHolder extends RealmViewHolder implements View.OnClickListener {
 
     public TextView title;
     public TextView timestamp;
-    public ImageView imageMood;
-    public Mood data;
+    public TextView description;
+    public Trigger data;
     public ViewHolder(View container) {
         super(container);
-        title = (TextView) container.findViewById(R.id.textNote);
-        timestamp = (TextView) container.findViewById(R.id.textDate);
-        imageMood = (ImageView) container.findViewById(R.id.imageMoodRow);
+        title = (TextView) container.findViewById(R.id.textTriggerTitle);
+        timestamp = (TextView) container.findViewById(R.id.textTriggerDate);
+        description = (TextView) container.findViewById(R.id.textTriggerDescription);
         container.setOnClickListener(this);
     }
 
@@ -42,34 +43,34 @@ public class MoodRecyclerAdapter extends RealmBasedRecyclerViewAdapter<Mood, Moo
     }
 }
 
-    public MoodRecyclerAdapter(
+    public TriggerRecyclerAdapter(
             Context context,
-            RealmResults<Mood> realmResults,
+            RealmResults<Trigger> realmResults,
             boolean automaticUpdate,
             boolean animateResults,
-            OnMoodItemClickListener clickListener) {
+            OnTriggerItemClickListener clickListener) {
         super(context, realmResults, automaticUpdate, animateResults);
         onClickListener = clickListener;
     }
 
     @Override
     public ViewHolder onCreateRealmViewHolder(ViewGroup viewGroup, int viewType) {
-        View v = inflater.inflate(R.layout.row_mood, viewGroup, false);
+        View v = inflater.inflate(R.layout.row_trigger, viewGroup, false);
         ViewHolder vh = new ViewHolder(v);
         return vh;
     }
 
     @Override
     public void onBindRealmViewHolder(ViewHolder viewHolder, int position) {
-        final Mood moodItem = realmResults.get(position);
-        viewHolder.title.setText(moodItem.getNote());
-        viewHolder.timestamp.setText(Mood.shortDateString(moodItem.getTimestamp()));
-        viewHolder.imageMood.setImageResource(Mood.moodToDrawableId(moodItem.getMood()));
-        viewHolder.data = moodItem;
+        final Trigger item = realmResults.get(position);
+        viewHolder.title.setText(item.getTitle());
+        viewHolder.description.setText(item.getDescription());
+        viewHolder.timestamp.setText(Mood.shortDateString(item.getTimestamp()));
+        viewHolder.data = item;
     }
 
-    interface OnMoodItemClickListener {
-        void onItemClick(Mood data);
+    interface OnTriggerItemClickListener {
+        void onItemClick(Trigger data);
     }
 
 }

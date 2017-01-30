@@ -10,6 +10,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import io.realm.RealmList;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 import io.realm.annotations.Required;
@@ -51,6 +52,8 @@ public class Mood extends RealmObject {
     @Required
     private Date timestamp;
 
+    RealmList<Trigger> triggers;
+
     public String getId() {
         return id;
     }
@@ -91,6 +94,14 @@ public class Mood extends RealmObject {
     // timestamp only set at creation
     private void setTimestamp(Date timestamp) {
         this.timestamp = timestamp;
+    }
+
+    public RealmList<Trigger> getTriggers() {
+        return triggers;
+    }
+
+    public void setTriggers(RealmList<Trigger> triggers) {
+        this.triggers = triggers;
     }
 
     @DrawableRes

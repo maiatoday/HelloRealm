@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -14,13 +13,14 @@ import android.widget.TextView;
 
 import net.maiatday.hellorealm.R;
 import net.maiatday.hellorealm.model.Mood;
+import net.maiatday.hellorealm.model.Trigger;
 import net.maiatday.hellorealm.service.WorkerIntentService;
 
-import java.util.Date;
 import java.util.UUID;
 
 import io.realm.Realm;
 import io.realm.RealmChangeListener;
+import io.realm.RealmList;
 import io.realm.RealmObject;
 import io.realm.RealmResults;
 
@@ -28,7 +28,7 @@ public class OneMoodActivity extends AppCompatActivity {
     private static final String TAG = "OneMoodActivity";
     private static final String KEY_MOOD_UUID = "mood_uuid";
     Realm realmForUIThread;
-    Mood firstMood;
+    Mood oneMood;
     private TextView textView;
     private EditText editTextMain;
     private EditText editTextWorker;
@@ -72,10 +72,10 @@ public class OneMoodActivity extends AppCompatActivity {
                 }
             });
         }
-        firstMood = searchMood(realmForUIThread, uuid);
+        oneMood = searchMood(realmForUIThread, uuid);
         //Example add a change listener for only this mood
-        RealmObject.addChangeListener(firstMood, moodListener);
-        
+        RealmObject.addChangeListener(oneMood, moodListener);
+
         updateUI();
     }
 
@@ -87,12 +87,12 @@ public class OneMoodActivity extends AppCompatActivity {
         if (textView != null &&
                 energyBar != null &&
                 currentMoodImage != null &&
-                firstMood != null) {
-            //energyBar.setProgress(firstMood.getEnergyLevel(), true);
-            textView.setText(firstMood.toString());
-            currentMoodImage.setImageResource(Mood.moodToDrawableId(firstMood.getMood()));
-            editTextMain.setText(firstMood.getNote());
-            editTextWorker.setText(firstMood.getNote());
+                oneMood != null) {
+            //energyBar.setProgress(oneMood.getEnergyLevel(), true);
+            textView.setText(oneMood.toString());
+            currentMoodImage.setImageResource(Mood.moodToDrawableId(oneMood.getMood()));
+            editTextMain.setText(oneMood.getNote());
+            editTextWorker.setText(oneMood.getNote());
         }
     }
 
@@ -100,7 +100,7 @@ public class OneMoodActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
 //        realmForUIThread.removeAllChangeListeners();
-        RealmObject.removeChangeListener(firstMood, moodListener);
+        RealmObject.removeChangeListener(oneMood, moodListener);
         realmForUIThread.close();
     }
 
@@ -148,6 +148,29 @@ public class OneMoodActivity extends AppCompatActivity {
         });
     }
 
+    public void onTriggerClick(View view) {
+        updateTriggers(null);
+    }
+
+    public void updateTriggers(String[] ids) {
+        realmForUIThread.executeTransactionAsync(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                Mood m = searchMood(realm, uuid);
+                RealmList<Trigger> existingTriggers = m.getTriggers();
+                //TODO fix, just a sample to toggle the triggers
+                if (existingTriggers.size() > 0) {
+                    m.setTriggers(null);
+                } else {
+                    RealmResults<Trigger> triggers = realm.where(Trigger.class).findAll();
+                    for (Trigger t : triggers) {
+                        m.getTriggers().add(t);
+                    }
+                }
+            }
+        });
+    }
+
 
     private SeekBar.OnSeekBarChangeListener seekBarChangeListener = new SeekBar.OnSeekBarChangeListener() {
         @Override
@@ -187,4 +210,5 @@ public class OneMoodActivity extends AppCompatActivity {
             updateUI();
         }
     };
+
 }
