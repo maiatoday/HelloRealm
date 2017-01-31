@@ -173,28 +173,8 @@ public class OneMoodActivity extends AppCompatActivity {
     }
 
     public void onTriggerClick(View view) {
-        updateTriggers(null);
+        TriggerSelectDialogFragment.show(getSupportFragmentManager(), null, oneMood.getId());
     }
-
-    public void updateTriggers(String[] ids) {
-        realmForUIThread.executeTransactionAsync(new Realm.Transaction() {
-            @Override
-            public void execute(Realm realm) {
-                Mood m = searchMood(realm, uuid);
-                RealmList<Trigger> existingTriggers = m.getTriggers();
-                //TODO fix, just a sample to toggle the triggers
-                if (existingTriggers.size() > 0) {
-                    m.setTriggers(null);
-                } else {
-                    RealmResults<Trigger> triggers = realm.where(Trigger.class).findAll();
-                    for (Trigger t : triggers) {
-                        m.getTriggers().add(t);
-                    }
-                }
-            }
-        });
-    }
-
 
     private SeekBar.OnSeekBarChangeListener seekBarChangeListener = new SeekBar.OnSeekBarChangeListener() {
         @Override
