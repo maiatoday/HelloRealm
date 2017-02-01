@@ -24,6 +24,7 @@
 
 package net.maiatday.hellorealm.ui.rrv;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -40,6 +41,7 @@ import net.maiatday.hellorealm.R;
 import net.maiatday.hellorealm.model.Mood;
 import net.maiatday.hellorealm.ui.DividerItemDecoration;
 import net.maiatday.hellorealm.ui.OneMoodActivity;
+import net.maiatday.hellorealm.ui.SettingsActivity;
 import net.maiatday.hellorealm.ui.thorben.AnotherMoodListActivity;
 import net.maiatday.hellorealm.ui.thorben.TriggersActivity;
 
@@ -97,6 +99,7 @@ public class MainActivity extends AppCompatActivity {
                                 break;
 
                             case R.id.action_settings:
+                                startActivity(new Intent(MainActivity.this, SettingsActivity.class));
                                 break;
 
                         }
